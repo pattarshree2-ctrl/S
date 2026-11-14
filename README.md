@@ -1,49 +1,18 @@
-# AI HUB – Android ಆ್ಯಪ್ ಪ್ರಾಜೆಕ್ಟ್
+# Website Hub (Android)
 
-AI HUB ವೆಬ್ ಆ್ಯಪ್ ಅನ್ನು Capacitor ಮೂಲಕ Android ಆ್ಯಪ್ (APK) ಆಗಿ ಪ್ಯಾಕೇಜ್ ಮಾಡುವ ಪ್ರಾಜೆಕ್ಟ್.
+A small Kotlin/XML Android app that keeps popular and custom website shortcuts in one place and opens them in an in-app WebView.
 
-## ಫೋಲ್ಡರ್‌ನಲ್ಲಿ ಏನಿದೆ
+## Features
 
-| ಫೈಲ್ | ಉದ್ದೇಶ |
-|---|---|
-| `www/index.html` | ಸಂಪೂರ್ಣ AI HUB ಆ್ಯಪ್ (ಇದನ್ನೇ ಎಡಿಟ್ ಮಾಡಿ) |
-| `www/manifest.webmanifest`, `www/sw.js` | ಬ್ರೌಸರ್‌ನಲ್ಲಿ "Add to Home Screen" ಇನ್‌ಸ್ಟಾಲ್‌ಗಾಗಿ |
-| `assets/` | ಆ್ಯಪ್ ಐಕಾನ್ ಮತ್ತು ಸ್ಪ್ಲಾಶ್ ಚಿತ್ರಗಳು |
-| `capacitor.config.json` | ಆ್ಯಪ್ ಹೆಸರು (AI HUB) ಮತ್ತು ಐಡಿ (`com.aihub.workspace`) |
-| `.github/workflows/android.yml` | GitHub ನಲ್ಲಿ APK ತಾನಾಗಿ ಬಿಲ್ಡ್ ಮಾಡುವ ಸೂಚನೆ |
+- Google, YouTube, Wikipedia, Amazon, and Flipkart shortcuts in a two-column grid.
+- Add custom sites with the + button; custom names and URLs are stored in `SharedPreferences`.
+- In-app WebView with JavaScript, DOM storage, a page-load progress bar, and Back / Forward / Refresh / Home controls.
+- HTTP(S)-only navigation, no cleartext traffic, and file/content access disabled in the WebView.
 
-## ವಿಧಾನ 1: GitHub ಮೂಲಕ APK ಪಡೆಯಿರಿ (ಲ್ಯಾಪ್‌ಟಾಪ್‌ನಲ್ಲಿ ಏನೂ ಇನ್‌ಸ್ಟಾಲ್ ಬೇಡ)
+## Build
 
-1. github.com ನಲ್ಲಿ ಹೊಸ ರೆಪೊಸಿಟರಿ ರಚಿಸಿ (ಉದಾ: `ai-hub-app`).
-2. ಈ ಫೋಲ್ಡರ್‌ನ ಎಲ್ಲಾ ಫೈಲ್‌ಗಳನ್ನು (`.github` ಫೋಲ್ಡರ್ ಸೇರಿ) ಅಲ್ಲಿಗೆ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ.
-3. ರೆಪೊಸಿಟರಿಯ **Actions** ಟ್ಯಾಬ್ → **Build Android APK** → **Run workflow** ಒತ್ತಿ.
-4. ಸುಮಾರು 5–10 ನಿಮಿಷದಲ್ಲಿ ಬಿಲ್ಡ್ ಮುಗಿಯುತ್ತದೆ. ಆ ರನ್ ತೆರೆದು ಕೆಳಗಿನ **Artifacts** ನಲ್ಲಿ `AI-HUB-apk` ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ (ZIP ಒಳಗೆ `app-debug.apk` ಇರುತ್ತದೆ).
-5. APK ಅನ್ನು ಫೋನ್‌ಗೆ ಕಳುಹಿಸಿ ತೆರೆದು ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿ. ಫೋನ್ "ಅಜ್ಞಾತ ಮೂಲಗಳಿಂದ ಇನ್‌ಸ್ಟಾಲ್" ಅನುಮತಿ ಕೇಳಿದರೆ ಒಪ್ಪಿಕೊಳ್ಳಿ.
+Open this repository's root in Android Studio and allow Gradle sync, then run the `app` configuration on a device/emulator (API 23+). The project uses Android Gradle Plugin 8.7.3, Kotlin 1.9.24, and compile SDK 35. A local JDK 17 and Android SDK platform 35 are required.
 
-ಇದು ಡೀಬಗ್ APK. ನಿಮ್ಮ ಸ್ವಂತ ಬಳಕೆ ಮತ್ತು ಪರೀಕ್ಷೆಗೆ ಸಾಕು. Play Store ನಲ್ಲಿ ಪ್ರಕಟಿಸಲು ಸಹಿ ಮಾಡಿದ (signed) release ಬಿಲ್ಡ್ ಬೇಕು.
+## Launcher icon note
 
-## ವಿಧಾನ 2: ನಿಮ್ಮ ಕಂಪ್ಯೂಟರ್‌ನಲ್ಲಿ ಬಿಲ್ಡ್ ಮಾಡಿ
-
-ಬೇಕಾದದ್ದು: Node.js 22, Java 21, Android Studio.
-
-```bash
-npm install
-npx cap add android
-npx capacitor-assets generate --android
-npx cap sync android
-npx cap open android      # Android Studio ತೆರೆಯುತ್ತದೆ → Build > Build APK(s)
-```
-
-## ವಿಧಾನ 3: ಇನ್‌ಸ್ಟಾಲ್ ಇಲ್ಲದೆ (PWA)
-
-`www` ಫೋಲ್ಡರ್ ಅನ್ನು Netlify, GitHub Pages ಅಥವಾ ಯಾವುದೇ ಸ್ಟ್ಯಾಟಿಕ್ ಹೋಸ್ಟಿಂಗ್‌ನಲ್ಲಿ ಹಾಕಿ. ಫೋನ್ Chrome ನಲ್ಲಿ ತೆರೆದು ಮೆನು → **Add to Home Screen** ಒತ್ತಿ.
-
-## ಆ್ಯಪ್ ಬದಲಾಯಿಸಲು
-
-`www/index.html` ಎಡಿಟ್ ಮಾಡಿ, ನಂತರ GitHub ಗೆ ಮತ್ತೆ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ. ಹೊಸ APK ತಾನಾಗಿ ಬಿಲ್ಡ್ ಆಗುತ್ತದೆ.
-
-## ಗಮನಿಸಿ
-
-- ಆ್ಯಪ್‌ನಲ್ಲಿನ ಲಾಗಿನ್ ಬಟನ್‌ಗಳು ಆಯಾ ಸೈಟ್ ಅನ್ನು ಫೋನ್‌ನ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ತೆರೆಯುತ್ತವೆ. AI HUB ಪಾಸ್‌ವರ್ಡ್ ಸಂಗ್ರಹಿಸುವುದಿಲ್ಲ.
-- ಬುಕ್‌ಮಾರ್ಕ್‌ಗಳು ಮತ್ತು ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಆ ಫೋನ್‌ನಲ್ಲೇ ಉಳಿಯುತ್ತವೆ.
-- ಫಾಂಟ್‌ಗಳು ಇಂಟರ್ನೆಟ್‌ನಿಂದ ಲೋಡ್ ಆಗುತ್ತವೆ. ಇಂಟರ್ನೆಟ್ ಇಲ್ಲದಿದ್ದರೆ ಫೋನ್‌ನ ಸಾಮಾನ್ಯ ಫಾಂಟ್ ಬಳಕೆಯಾಗುತ್ತದೆ.
+The repository's existing root-level `Icon` file is empty and is not an Android image/resource, so it cannot be used directly as a launcher icon. This project supplies its own valid vector launcher drawable at `app/src/main/res/drawable/icon_launcher.xml`.
